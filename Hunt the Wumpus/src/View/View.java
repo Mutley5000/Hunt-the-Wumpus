@@ -5,10 +5,29 @@
  */
 package View;
 
+import Model.Model;
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  *
  * @author rolley
  */
-public class View {
+public class View implements Observer {
+    
+    IGUI gui;
+    
+    public View(Model m) {
+        m.addObserver(this);
+    }
+    
+    public void setGUI(IGUI ig) {
+        gui = ig;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

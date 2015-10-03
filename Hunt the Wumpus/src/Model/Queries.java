@@ -9,6 +9,6 @@ package Model;
  *
  * @author rolley
  */
-public class Queries {
+public class Queries implements IQueries {
     
 }

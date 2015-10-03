@@ -5,10 +5,24 @@
  */
 package Controller;
 
+import Model.Model;
+import View.IGUI;
+
 /**
  *
  * @author rolley
  */
 public class Controller {
+    
+    Model model;
+    IGUI gui;
+    
+    public Controller(Model m) {
+        model = m;
+    }
+
+    public void setGUI(IGUI ig) {
+        gui = ig;
+    }
     
 }
