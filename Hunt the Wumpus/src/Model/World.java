@@ -31,7 +31,18 @@ public class World extends Graph {
 	}
 	return false;
     }
+    
+    public ArrayList <Room> getRooms() {
+	edges = location.edges;
+	for ( Edge e : edges ){
+            Room r = getRoom(e.to);
+            rooms.add(r);
+        }
+	return rooms;
+    }
 
+    
+    
     /*public String describe() {
 	String s = location.describe();
 	s += "\nThere are exits to:";
@@ -42,14 +53,7 @@ public class World extends Graph {
 	return s;
     }*/
     
-    public ArrayList <Room> getRooms() {
-	edges = location.edges;
-	for ( Edge e : edges ){
-            Room r = getRoom(e.to);
-            rooms.add(r);
-        }
-	return rooms;
-    }
+    
 
     public boolean shoot( Room r ) {
 	if ( ( r.label ).equals( wumpus.label ) )

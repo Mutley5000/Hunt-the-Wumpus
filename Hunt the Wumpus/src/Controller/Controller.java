@@ -27,6 +27,7 @@ public class Controller {
     
     public void startButtonAction() {
         gui.startGame();
+        model.createSession();
     }
     
     public void optionsButtonAction() {
