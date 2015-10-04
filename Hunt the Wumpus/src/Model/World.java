@@ -13,8 +13,6 @@ public class World extends Graph {
 
     public World( Layout layout ) {
         super( layout.getRooms() );
-        wumpus = layout.getWumpusLocation();
-        location = layout.getPlayerLocation();
     }
     
     public Room getRoom( String r) {
@@ -72,5 +70,4 @@ public class World extends Graph {
 	}
 	return path;
     }
-    
-}
+ }

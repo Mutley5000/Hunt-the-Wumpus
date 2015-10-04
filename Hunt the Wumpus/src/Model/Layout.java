@@ -5,7 +5,6 @@
  */
 package Model;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class Layout {
@@ -128,13 +127,5 @@ public class Layout {
         
     public Hashtable getRooms() {
         return rooms;
-    }
-        
-    public Room getPlayerLocation() {
-	return (Room) rooms.get( "1" );
-    }
-    
-    public Room getWumpusLocation() {
-	return  (Room) rooms.get( "20" );
     }
 }

@@ -30,6 +30,7 @@ public class Queries implements IQueries {
     // Declare SQL statements
     String updatePlayerLocation = "UPDATE PLAYER SET LOCATION = ? WHERE ID = ?";
     String getPlayer = "SELECT * FROM PLAYER WHERE ID = ?";
+    String getWumpus = "SELECT * FROM WUMPUS WHERE ID = ?";
     
     String insertNewBookingSQL = "INSERT INTO BOOKINGS(LASTNAME, PHONE, DINERS, DAYOFWEEK, TABLEID) VALUES(?,?,?,?,?)";
     String selectAllBookingsSQL =  "SELECT ID, LASTNAME, PHONE, DINERS, DAYOFWEEK, TABLEID " +
@@ -128,5 +129,31 @@ public class Queries implements IQueries {
             System.out.println( err.getMessage( ) );
         }
         return player;
+    }
+
+    @Override
+    public Wumpus getWumpus() {
+        ResultSet rs = null;
+        Wumpus wumpus = null;
+        
+        try {
+            ps = connection.prepareStatement(getWumpus);
+            ps.setLong(1, 1);
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                int id = rs.getInt("ID");
+                String location = rs.getString("LOCATION");
+                String state = rs.getString("STATE");
+                String sendOff = rs.getString("SENDOFF");
+                
+                wumpus = new Wumpus(id, location, state, sendOff);
+            }
+        }
+        
+        catch ( SQLException err ) {
+            System.out.println( err.getMessage( ) );
+        }
+        return wumpus;
     }
 }

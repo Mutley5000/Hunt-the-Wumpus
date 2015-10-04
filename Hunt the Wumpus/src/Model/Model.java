@@ -16,12 +16,14 @@ public class Model extends Observable {
     
     IQueries queries;
     Player currentPlayer;
+    Wumpus currentWumpus;
     Session currentSession;
     
     Layout layout = new Layout();
     World world = new World(layout);
     
     String previousRoom;
+    int moveOption;
     
     
     
@@ -34,13 +36,31 @@ public class Model extends Observable {
     
     public void createSession() {
         currentPlayer = queries.getPlayer();
-        currentSession = new Session(currentPlayer);
+        currentWumpus = queries.getWumpus();
+        currentSession = new Session(currentPlayer, currentWumpus);
     }
     
     
+    
+    
     public void goLeft() {
+        moveOption = 0;
+        move(moveOption);
+    }
+    
+    public void goBack() {
+        moveOption = 1;
+        move(moveOption);
+    }
+    
+    public void goRight() {
+        moveOption = 2;
+        move(moveOption);
+    }
+    
+    public void move(int i) {
         ArrayList<Room> rooms = world.getRooms();
-        world.enter(rooms.get(0));
+        world.enter(rooms.get(i));
         System.out.println(world.location.label);
         currentPlayer.location = world.location.label;
         queries.updatePlayerLocation(currentPlayer.id, currentPlayer.location);
@@ -50,25 +70,19 @@ public class Model extends Observable {
             System.out.println(r.label);
         System.out.println("space");*/
         rooms.clear();
+        checkForWumpus();
     }
     
-    public void goBack() {
-        ArrayList<Room> rooms = world.getRooms();
-        world.enter(rooms.get(1));
-        System.out.println(world.location.label);
-        currentPlayer.location = world.location.label;
-        queries.updatePlayerLocation(currentPlayer.id, currentPlayer.location);
-        System.out.println("Player location: "+currentSession.player.location);
-        rooms.clear();
-    }
     
-    public void goRight() {
-        ArrayList<Room> rooms = world.getRooms();
-        world.enter(rooms.get(2));
-        System.out.println(world.location.label);
-        currentPlayer.location = world.location.label;
-        queries.updatePlayerLocation(currentPlayer.id, currentPlayer.location);
-        System.out.println("Player location: "+currentSession.player.location);
-        rooms.clear();
+    public void checkForWumpus() {
+        
+        int distance = world.distance(world.getRoom(currentPlayer.location), world.getRoom(currentWumpus.location));
+        if (distance == 0) {
+            
+        }
+        
+        else {
+            
+        }
     }
 }

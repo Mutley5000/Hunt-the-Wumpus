@@ -19,6 +19,6 @@ public class Node {
         step = s;
         distance = d;
         visited = v;
-        edges = new ArrayList <Edge> ();
+        edges = new ArrayList <> ();
     }
 }

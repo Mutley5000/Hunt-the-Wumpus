@@ -12,9 +12,11 @@ package Model;
 public class Session {
     
     Player player;
+    Wumpus wumpus;
     
-    public Session(Player player) {
+    public Session(Player player, Wumpus wumpus) {
         this.player = player;
+        this.wumpus = wumpus;
     }
 
     public Player getPlayer() {
@@ -24,6 +26,12 @@ public class Session {
     public void setPlayer(Player player) {
         this.player = player;
     }
-    
-    
+
+    public Wumpus getWumpus() {
+        return wumpus;
+    }
+
+    public void setWumpus(Wumpus wumpus) {
+        this.wumpus = wumpus;
+    }
 }
