@@ -77,6 +77,17 @@ public class GUI extends JFrame implements IGUI {
     
     public GUI(Controller c) {
         
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        
         controller = c;
         
         initComponents();
@@ -91,6 +102,7 @@ public class GUI extends JFrame implements IGUI {
           TreasurePanel.setVisible(false);
           BirdPanel.setVisible(false);
           SleepMonstor.setVisible(false);
+          setVisible(true);
     }
     
     private void initComponents() {
@@ -163,15 +175,10 @@ public class GUI extends JFrame implements IGUI {
         Save.setBackground(new java.awt.Color(51, 51, 51));
         Save.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Save.setForeground(new java.awt.Color(255, 102, 102));
-        Save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Save.png"))); // NOI18N
+        Save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/Save.png"))); // NOI18N
         Save.setText("Save");
-        Save.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                
-                //controller
-                
-                SaveActionPerformed(evt);
-            }
+        Save.addActionListener((java.awt.event.ActionEvent evt) -> {
+            controller.saveButtonAction();
         });
         OptionsPanel.add(Save);
         Save.setBounds(350, 430, 110, 50);
@@ -180,16 +187,14 @@ public class GUI extends JFrame implements IGUI {
         Quit.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         Quit.setForeground(new java.awt.Color(255, 0, 0));
         Quit.setText("Quit");
-        Quit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                QuitActionPerformed(evt);
-            }
+        Quit.addActionListener((java.awt.event.ActionEvent evt) -> {
+            controller.quitButtonAction();
         });
         OptionsPanel.add(Quit);
         Quit.setBounds(640, 430, 110, 50);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/pause.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/pause.png"))); // NOI18N
         jLabel1.setText("Game Is paused");
         OptionsPanel.add(jLabel1);
         jLabel1.setBounds(100, 60, 230, 100);
@@ -204,16 +209,14 @@ public class GUI extends JFrame implements IGUI {
         Return.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Return.setForeground(new java.awt.Color(255, 102, 102));
         Return.setText("Return to game");
-        Return.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ReturnActionPerformed(evt);
-            }
+        Return.addActionListener((java.awt.event.ActionEvent evt) -> {
+            controller.returnButtonAction();
         });
         OptionsPanel.add(Return);
         Return.setBounds(480, 430, 130, 50);
 
         OptionsBackground.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        OptionsBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Backgrounds/Main Menu.png"))); // NOI18N
+        OptionsBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Backgrounds/Main Menu.png"))); // NOI18N
         OptionsBackground.setMaximumSize(new java.awt.Dimension(1060, 790));
         OptionsBackground.setMinimumSize(new java.awt.Dimension(1060, 790));
         OptionsBackground.setPreferredSize(new java.awt.Dimension(1060, 790));
@@ -235,80 +238,68 @@ public class GUI extends JFrame implements IGUI {
         RoomPanel.add(jScrollPane1);
         jScrollPane1.setBounds(250, 680, 557, 84);
 
-        Search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/search.png"))); // NOI18N
+        Search.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/search.png"))); // NOI18N
         Search.setText("Search");
         Search.setFocusable(false);
         Search.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Search.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        Search.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SearchActionPerformed(evt);
-            }
+        Search.addActionListener((java.awt.event.ActionEvent evt) -> {
+            controller.searchButtonAction();
         });
         RoomPanel.add(Search);
         Search.setBounds(270, 570, 80, 94);
 
-        Map.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/map.png"))); // NOI18N
+        Map.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/map.png"))); // NOI18N
         Map.setText("Map");
         Map.setFocusable(false);
         Map.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Map.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        Map.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MapActionPerformed(evt);
-            }
+        Map.addActionListener((java.awt.event.ActionEvent evt) -> {
+            controller.mapButtonAction();
         });
         RoomPanel.add(Map);
         Map.setBounds(170, 570, 80, 94);
 
-        Left.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/left.png"))); // NOI18N
+        Left.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/left.png"))); // NOI18N
         Left.setToolTipText("Go Left");
         Left.setFocusable(false);
         Left.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Left.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        Left.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LeftActionPerformed(evt);
-            }
+        Left.addActionListener((java.awt.event.ActionEvent evt) -> {
+            controller.leftButtonAction();
         });
         RoomPanel.add(Left);
         Left.setBounds(400, 570, 89, 76);
 
-        Back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/down.png"))); // NOI18N
+        Back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/down.png"))); // NOI18N
         Back.setToolTipText("Go back to previous room");
         Back.setFocusable(false);
         Back.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Back.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        Back.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BackActionPerformed(evt);
-            }
+        Back.addActionListener((java.awt.event.ActionEvent evt) -> {
+            controller.backButtonAction();
         });
         RoomPanel.add(Back);
         Back.setBounds(490, 570, 59, 95);
 
-        Right.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/right.png"))); // NOI18N
+        Right.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/right.png"))); // NOI18N
         Right.setToolTipText("Go right");
         Right.setFocusable(false);
         Right.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Right.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        Right.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RightActionPerformed(evt);
-            }
+        Right.addActionListener((java.awt.event.ActionEvent evt) -> {
+            controller.rightButtonAction();
         });
         RoomPanel.add(Right);
         Right.setBounds(560, 570, 87, 76);
 
-        Attack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/sword.png"))); // NOI18N
+        Attack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/sword.png"))); // NOI18N
         Attack.setText("Attack");
         Attack.setFocusable(false);
         Attack.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Attack.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        Attack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AttackActionPerformed(evt);
-            }
+        Attack.addActionListener((java.awt.event.ActionEvent evt) -> {
+            controller.attackButtonAction();
         });
         RoomPanel.add(Attack);
         Attack.setBounds(680, 570, 80, 94);
@@ -317,18 +308,16 @@ public class GUI extends JFrame implements IGUI {
         RoomPanel.add(EquipCombo);
         EquipCombo.setBounds(810, 640, 130, 27);
 
-        EquipLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Equip.png"))); // NOI18N
+        EquipLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/Equip.png"))); // NOI18N
         EquipLbl.setToolTipText(" Equip Weapon");
         EquipLbl.setOpaque(true);
         RoomPanel.add(EquipLbl);
         EquipLbl.setBounds(810, 570, 80, 70);
 
-        Options.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/settings.png"))); // NOI18N
+        Options.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/settings.png"))); // NOI18N
         Options.setToolTipText("Options");
-        Options.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                OptionsActionPerformed(evt);
-            }
+        Options.addActionListener((java.awt.event.ActionEvent evt) -> {
+            controller.optionsButtonAction();
         });
         RoomPanel.add(Options);
         Options.setBounds(20, 10, 70, 80);
@@ -349,7 +338,7 @@ public class GUI extends JFrame implements IGUI {
         RoomPanel.add(RightDoor1);
         RightDoor1.setBounds(700, 200, 80, 30);
 
-        Bird.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Entities/Parrot.png"))); // NOI18N
+        Bird.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Entities/Parrot.png"))); // NOI18N
         Bird.setText("jLabel2");
 
         jTextArea1.setColumns(20);
@@ -381,7 +370,7 @@ public class GUI extends JFrame implements IGUI {
         RoomPanel.add(BirdPanel);
         BirdPanel.setBounds(120, 0, 510, 230);
 
-        SleepMonstor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Entities/Sleeping Monster.png"))); // NOI18N
+        SleepMonstor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Entities/Sleeping Monster.png"))); // NOI18N
         SleepMonstor.setText("jLabel2");
 
         javax.swing.GroupLayout SleepMonstorPanelLayout = new javax.swing.GroupLayout(SleepMonstorPanel);
@@ -403,7 +392,7 @@ public class GUI extends JFrame implements IGUI {
         RoomPanel.add(SleepMonstorPanel);
         SleepMonstorPanel.setBounds(430, 280, 210, 240);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Items/Treasure.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Items/Treasure.png"))); // NOI18N
 
         javax.swing.GroupLayout TreasurePanelLayout = new javax.swing.GroupLayout(TreasurePanel);
         TreasurePanel.setLayout(TreasurePanelLayout);
@@ -422,7 +411,7 @@ public class GUI extends JFrame implements IGUI {
         RoomPanel.add(TreasurePanel);
         TreasurePanel.setBounds(470, 330, 140, 150);
 
-        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Backgrounds/Room background.png"))); // NOI18N
+        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Backgrounds/Room background.png"))); // NOI18N
         RoomPanel.add(Background);
         Background.setBounds(0, 0, 1060, 790);
 
@@ -435,16 +424,14 @@ public class GUI extends JFrame implements IGUI {
         StartScreenPanel.setOpaque(true);
 
         Start.setText("Start New Game");
-        Start.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                StartActionPerformed(evt);
-            }
+        Start.addActionListener((java.awt.event.ActionEvent evt) -> {
+            controller.startButtonAction();
         });
         StartScreenPanel.add(Start);
         Start.setBounds(480, 530, 120, 50);
 
         StartBackground.setBackground(new java.awt.Color(0, 0, 0));
-        StartBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Backgrounds/Start Screen.png"))); // NOI18N
+        StartBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Backgrounds/Start Screen.png"))); // NOI18N
         StartScreenPanel.add(StartBackground);
         StartBackground.setBounds(0, 0, 1060, 790);
 
@@ -456,14 +443,14 @@ public class GUI extends JFrame implements IGUI {
         AngryMonstorPanel.setMaximumSize(new java.awt.Dimension(1060, 790));
         AngryMonstorPanel.setMinimumSize(new java.awt.Dimension(1060, 790));
 
-        Monstor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Entities/Angry Monster.png"))); // NOI18N
+        Monstor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Entities/Angry Monster.png"))); // NOI18N
         Monstor.setText("jLabel2");
         AngryMonstorPanel.add(Monstor);
         Monstor.setBounds(400, 360, 213, 255);
 
         Attack2.setBackground(new java.awt.Color(102, 102, 102));
         Attack2.setForeground(new java.awt.Color(51, 51, 51));
-        Attack2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/sword.png"))); // NOI18N
+        Attack2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/sword.png"))); // NOI18N
         Attack2.setToolTipText("Attack");
         AngryMonstorPanel.add(Attack2);
         Attack2.setBounds(340, 660, 80, 70);
@@ -473,7 +460,7 @@ public class GUI extends JFrame implements IGUI {
         AngryMonstorPanel.add(RunAway);
         RunAway.setBounds(450, 660, 105, 70);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Equip.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Icons/Equip.png"))); // NOI18N
         jLabel2.setToolTipText("Select weapon to attack with");
         AngryMonstorPanel.add(jLabel2);
         jLabel2.setBounds(570, 660, 80, 50);
@@ -518,24 +505,20 @@ public class GUI extends JFrame implements IGUI {
         Quit1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         Quit1.setForeground(new java.awt.Color(255, 0, 0));
         Quit1.setText("Quit");
-        Quit1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Quit1ActionPerformed(evt);
-            }
+        Quit1.addActionListener((java.awt.event.ActionEvent evt) -> {
+            controller.quitButtonAction();
         });
         WinPanel.add(Quit1);
         Quit1.setBounds(660, 460, 110, 50);
 
         Start1.setText("Start New Game");
-        Start1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Start1ActionPerformed(evt);
-            }
+        Start1.addActionListener((java.awt.event.ActionEvent evt) -> {
+            controller.startButtonAction();
         });
         WinPanel.add(Start1);
         Start1.setBounds(330, 460, 120, 50);
 
-        WinBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Backgrounds/Game Ending Screen.png"))); // NOI18N
+        WinBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Backgrounds/Game Ending Screen.png"))); // NOI18N
         WinPanel.add(WinBackground);
         WinBackground.setBounds(0, 0, 1060, 790);
 
@@ -554,19 +537,15 @@ public class GUI extends JFrame implements IGUI {
         Quit2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         Quit2.setForeground(new java.awt.Color(255, 0, 0));
         Quit2.setText("Quit");
-        Quit2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Quit2ActionPerformed(evt);
-            }
+        Quit2.addActionListener((java.awt.event.ActionEvent evt) -> {
+            controller.quitButtonAction();
         });
         DeadPanel.add(Quit2);
         Quit2.setBounds(760, 600, 110, 50);
 
         Start2.setText("Start New Game");
-        Start2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Start2ActionPerformed(evt);
-            }
+        Start2.addActionListener((java.awt.event.ActionEvent evt) -> {
+            controller.startButtonAction();
         });
         DeadPanel.add(Start2);
         Start2.setBounds(260, 600, 120, 50);
@@ -581,6 +560,8 @@ public class GUI extends JFrame implements IGUI {
 
         pack();
     }
+    
+    // To change to run through Controller
     
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {                                       
         // TODO add your handling code here:
@@ -639,92 +620,55 @@ object.var = 1;     // non static variable
      
      //notiforcation.setText(perform("enter 10"));
     }                                     
-
-    private void OptionsActionPerformed(java.awt.event.ActionEvent evt) {                                        
     
-      RoomPanel.setVisible(false); 
-     StartScreenPanel.setVisible(false);
-     OptionsPanel.setVisible(true);
-     
-     AngryMonstorPanel.setVisible(false);
-     WinPanel.setVisible(false);
-     DeadPanel.setVisible(false);
-        
-    }                                       
-
-    private void StartActionPerformed(java.awt.event.ActionEvent evt) {                                      
-     RoomPanel.setVisible(true); 
-     StartScreenPanel.setVisible(false);
-     OptionsPanel.setVisible(false);
-     AngryMonstorPanel.setVisible(false);
-     WinPanel.setVisible(false);
-     DeadPanel.setVisible(false);
-     TreasurePanel.setVisible(false);
-    }                                     
-
     private void SaveActionPerformed(java.awt.event.ActionEvent evt) {                                     
         // TODO add your handling code here:
     }                                    
 
-    private void ReturnActionPerformed(java.awt.event.ActionEvent evt) {                                       
-    
-     RoomPanel.setVisible(true); 
-     StartScreenPanel.setVisible(false);
-     OptionsPanel.setVisible(false);
-     
-     AngryMonstorPanel.setVisible(false);
-          WinPanel.setVisible(false);
-          DeadPanel.setVisible(false);
-     
-    }                                      
-
-    private void QuitActionPerformed(java.awt.event.ActionEvent evt) {                                     
-          RoomPanel.setVisible(false); 
-          StartScreenPanel.setVisible(true);
-          OptionsPanel.setVisible(false);
-    }                                    
-
-    private void Quit1ActionPerformed(java.awt.event.ActionEvent evt) {                                      
-       RoomPanel.setVisible(false); 
-       StartScreenPanel.setVisible(true);
-       OptionsPanel.setVisible(false);
-       
-       AngryMonstorPanel.setVisible(false);
-          WinPanel.setVisible(false);
-          DeadPanel.setVisible(false);
-    }                                     
-
-    private void Start1ActionPerformed(java.awt.event.ActionEvent evt) {                                       
-     RoomPanel.setVisible(true); 
-     StartScreenPanel.setVisible(false);
-     OptionsPanel.setVisible(false);
-     
-     AngryMonstorPanel.setVisible(false);
-          WinPanel.setVisible(false);
-          DeadPanel.setVisible(false);
-    }                                      
-
-    private void Quit2ActionPerformed(java.awt.event.ActionEvent evt) {                                      
-       RoomPanel.setVisible(false); 
-       StartScreenPanel.setVisible(true);
-       OptionsPanel.setVisible(false);
-       
-       AngryMonstorPanel.setVisible(false);
-          WinPanel.setVisible(false);
-          DeadPanel.setVisible(false);
-    }                                     
-
-    private void Start2ActionPerformed(java.awt.event.ActionEvent evt) {                                       
-     RoomPanel.setVisible(true); 
-     StartScreenPanel.setVisible(false);
-     OptionsPanel.setVisible(false);
-     
-     AngryMonstorPanel.setVisible(false);
-          WinPanel.setVisible(false);
-          DeadPanel.setVisible(false);
-    }                                      
-
     private void EquipCombo2ActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
+    }
+
+    
+    
+    @Override
+    public void startGame() {
+        RoomPanel.setVisible(true); 
+        StartScreenPanel.setVisible(false);
+        OptionsPanel.setVisible(false);
+        AngryMonstorPanel.setVisible(false);
+        WinPanel.setVisible(false);
+        DeadPanel.setVisible(false);
+        TreasurePanel.setVisible(false);
+    }
+
+    @Override
+    public void showOptionsMenu() {
+        RoomPanel.setVisible(false); 
+        StartScreenPanel.setVisible(false);
+        OptionsPanel.setVisible(true);
+        AngryMonstorPanel.setVisible(false);
+        WinPanel.setVisible(false);
+        DeadPanel.setVisible(false);
+    }
+
+    @Override
+    public void hideOptionsMenu() {
+        RoomPanel.setVisible(true); 
+        StartScreenPanel.setVisible(false);
+        OptionsPanel.setVisible(false);
+        AngryMonstorPanel.setVisible(false);
+        WinPanel.setVisible(false);
+        DeadPanel.setVisible(false);
+    }
+
+    @Override
+    public void returnToStartScreen() {
+        RoomPanel.setVisible(false); 
+        StartScreenPanel.setVisible(true);
+        OptionsPanel.setVisible(false);
+        AngryMonstorPanel.setVisible(false);
+        WinPanel.setVisible(false);
+        DeadPanel.setVisible(false);
     }
 }
