@@ -8,6 +8,8 @@ public class World extends Graph {
 
     Room wumpus;
     Room location;
+    ArrayList <Edge> edges;
+    ArrayList <Room> rooms = new ArrayList<>();
 
     public World( Layout layout ) {
         super( layout.getRooms() );
@@ -30,7 +32,7 @@ public class World extends Graph {
 	return false;
     }
 
-    public String describe() {
+    /*public String describe() {
 	String s = location.describe();
 	s += "\nThere are exits to:";
 	ArrayList <Edge>  ale = location.edges;
@@ -38,6 +40,15 @@ public class World extends Graph {
             s += "\n\t"+e.to;
 	s += "\nThe wumpus is "+distance( location, wumpus )+" rooms away";
 	return s;
+    }*/
+    
+    public ArrayList <Room> getRooms() {
+	edges = location.edges;
+	for ( Edge e : edges ){
+            Room r = getRoom(e.to);
+            rooms.add(r);
+        }
+	return rooms;
     }
 
     public boolean shoot( Room r ) {

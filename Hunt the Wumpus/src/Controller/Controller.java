@@ -25,50 +25,53 @@ public class Controller {
         gui = ig;
     }
     
+    public void startButtonAction() {
+        gui.startGame();
+    }
+    
+    public void optionsButtonAction() {
+        gui.showOptionsMenu();
+    }
+    
+    
+    //TODO
     public void saveButtonAction() {
         
+    }
+    
+    
+    
+    public void returnButtonAction() {
+        gui.hideOptionsMenu();
     }
     
     public void quitButtonAction() {
         gui.returnToStartScreen();
     }
     
-    public void returnButtonAction() {
-        gui.hideOptionsMenu();
+    
+    //TODO
+    public void mapButtonAction() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     public void searchButtonAction() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void mapButtonAction() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public void leftButtonAction() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        model.goLeft();
     }
 
     public void backButtonAction() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        model.goBack();
     }
 
     public void rightButtonAction() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        model.goRight();
     }
 
     public void attackButtonAction() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    public void optionsButtonAction() {
-        gui.showOptionsMenu();
-    }
-
-    public void startButtonAction() {
-        gui.startGame();
-    }
-    
-    
-    
 }

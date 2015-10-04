@@ -17,7 +17,7 @@ public class Graph {
     public Graph( Hashtable n ) {
         nodes = n;
     }
-    
+
     public Node getNode( String label ) {
         return (Node) nodes.get( label );
     }
