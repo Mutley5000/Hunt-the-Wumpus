@@ -17,6 +17,7 @@ public class Model extends Observable {
     IQueries queries;
     Player currentPlayer;
     Wumpus currentWumpus;
+    Parrot currentParrot;
     Session currentSession;
     
     Layout layout = new Layout();
@@ -37,7 +38,8 @@ public class Model extends Observable {
     public void createSession() {
         currentPlayer = queries.getPlayer();
         currentWumpus = queries.getWumpus();
-        currentSession = new Session(currentPlayer, currentWumpus);
+        currentParrot = queries.getParrot();
+        currentSession = new Session(currentPlayer, currentWumpus, currentParrot);
     }
     
     
@@ -70,13 +72,28 @@ public class Model extends Observable {
             System.out.println(r.label);
         System.out.println("space");*/
         rooms.clear();
-        checkForWumpus();
+        checkForEntities();
     }
     
+    public void checkForEntities(){
+        checkForWumpus();
+        checkForParrot();
+    }
     
     public void checkForWumpus() {
         
         int distance = world.distance(world.getRoom(currentPlayer.location), world.getRoom(currentWumpus.location));
+        if (distance == 0) {
+            
+        }
+        
+        else {
+            
+        }
+    }
+    
+    public void checkForParrot() {
+        int distance = world.distance(world.getRoom(currentPlayer.location), world.getRoom(currentParrot.location));
         if (distance == 0) {
             
         }

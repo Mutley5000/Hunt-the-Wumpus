@@ -31,6 +31,7 @@ public class Queries implements IQueries {
     String updatePlayerLocation = "UPDATE PLAYER SET LOCATION = ? WHERE ID = ?";
     String getPlayer = "SELECT * FROM PLAYER WHERE ID = ?";
     String getWumpus = "SELECT * FROM WUMPUS WHERE ID = ?";
+    String getParrot = "SELECT * FROM PARROT WHERE ID = ?";
     
     String insertNewBookingSQL = "INSERT INTO BOOKINGS(LASTNAME, PHONE, DINERS, DAYOFWEEK, TABLEID) VALUES(?,?,?,?,?)";
     String selectAllBookingsSQL =  "SELECT ID, LASTNAME, PHONE, DINERS, DAYOFWEEK, TABLEID " +
@@ -155,5 +156,30 @@ public class Queries implements IQueries {
             System.out.println( err.getMessage( ) );
         }
         return wumpus;
+    }
+
+    @Override
+    public Parrot getParrot() {
+        ResultSet rs = null;
+        Parrot parrot = null;
+        
+        try {
+            ps = connection.prepareStatement(getParrot);
+            ps.setLong(1, 1);
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                int id = rs.getInt("ID");
+                String location = rs.getString("LOCATION");
+                int distance = rs.getInt("DISTANCE");
+                
+                parrot = new Parrot(id, location, distance);
+            }
+        }
+        
+        catch ( SQLException err ) {
+            System.out.println( err.getMessage( ) );
+        }
+        return parrot;
     }
 }
