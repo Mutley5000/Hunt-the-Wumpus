@@ -26,6 +26,7 @@ public class Model extends Observable {
 
     String previousRoom;
     int moveOption;
+    ArrayList<Room> rooms;
 
     public Model(IQueries iq) {
         super();
@@ -47,6 +48,15 @@ public class Model extends Observable {
         //          Save session to DB.
         //          Load session from DB.
         currentSession = new Session(currentPlayer.id, currentWumpus.id, currentParrot.id, treasure.id);
+        getRooms();
+        setChanged();
+        notifyObservers(rooms);
+    }
+
+    public ArrayList<Room> getRooms() {
+        world.setLocation(currentPlayer.location);
+        rooms = world.getRooms();
+        return rooms;
     }
 
     public void goLeft() {
@@ -65,8 +75,7 @@ public class Model extends Observable {
     }
 
     public void move(int i) {
-        world.setLocation(currentPlayer.location);
-        ArrayList<Room> rooms = world.getRooms();
+        getRooms();
         world.enter(rooms.get(i));
         System.out.println(world.location.label);
         currentPlayer.location = world.location.label;
@@ -77,7 +86,11 @@ public class Model extends Observable {
          System.out.println(r.label);
          System.out.println("space");*/
         rooms.clear();
+        getRooms();
         checkRoomContents();
+        setChanged();
+        notifyObservers(rooms);
+        rooms.clear();
     }
 
     public void checkRoomContents() {
@@ -122,5 +135,10 @@ public class Model extends Observable {
         currentSession.setCreatedDate();
         queries.saveSession(currentSession);
         System.out.println("Here");
+    }
+    
+    public String sendMessage() {
+        String message = "You are in room " + currentPlayer.location;
+        return message;
     }
 }

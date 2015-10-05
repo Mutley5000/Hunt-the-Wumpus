@@ -6,6 +6,8 @@
 package View;
 
 import Model.Model;
+import Model.Room;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -27,7 +29,8 @@ public class View implements Observer {
 
     @Override
     public void update(Observable obs, Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Room> rooms = (ArrayList) obj;
+        gui.setRoomLables(rooms.get(0).label, rooms.get(2).label);
     }
     
 }

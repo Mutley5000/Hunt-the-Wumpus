@@ -671,4 +671,17 @@ object.var = 1;     // non static variable
         WinPanel.setVisible(false);
         DeadPanel.setVisible(false);
     }
+
+    @Override
+    public void setRoomLables(String left, String right) {
+        LeftDoor.setText(left);
+        LeftDoor1.setText(left);
+        RightDoor.setText(right);
+        RightDoor1.setText(right);
+    }
+
+    @Override
+    public void setTextArea(String info) {
+        notiforcation.setText(info);
+    }
 }

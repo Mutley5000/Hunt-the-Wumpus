@@ -15,5 +15,6 @@ public interface IGUI {
     public void showOptionsMenu();
     public void hideOptionsMenu();
     public void returnToStartScreen();
-    
+    public void setRoomLables(String left, String right);
+    public void setTextArea(String info);
 }

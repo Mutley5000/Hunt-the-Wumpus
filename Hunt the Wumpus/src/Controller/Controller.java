@@ -28,6 +28,7 @@ public class Controller {
     public void startButtonAction() {
         gui.startGame();
         model.createSession();
+        gui.setTextArea(model.sendMessage());
     }
     
     public void optionsButtonAction() {
@@ -62,14 +63,17 @@ public class Controller {
 
     public void leftButtonAction() {
         model.goLeft();
+        gui.setTextArea(model.sendMessage());
     }
 
     public void backButtonAction() {
         model.goBack();
+        gui.setTextArea(model.sendMessage());
     }
 
     public void rightButtonAction() {
         model.goRight();
+        gui.setTextArea(model.sendMessage());
     }
 
     public void attackButtonAction() {
