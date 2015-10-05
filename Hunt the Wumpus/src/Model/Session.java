@@ -14,41 +14,51 @@ import java.util.Date;
 public class Session {
     
     Date createdDate = new Date();
-    Player player;
-    Wumpus wumpus;
-    Parrot parrot;
+    long playerID;
+    long wumpusID;
+    long parrotID;
+    long treasureID;
     
-    public Session(Player player, Wumpus wumpus, Parrot parrot) {
-        this.player = player;
-        this.wumpus = wumpus;
-        this.parrot = parrot;
+    public Session(long playerID, long wumpusID, long parrotID, long treasureID) {
+        this.playerID = playerID;
+        this.wumpusID = wumpusID;
+        this.parrotID = parrotID;
+        this.treasureID = treasureID;
     }
 
     public Date getCreatedDate() {
         return createdDate;
     }
 
-    public Player getPlayer() {
-        return player;
+    public long getPlayerID() {
+        return playerID;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setPlayerID(long playerID) {
+        this.playerID = playerID;
     }
 
-    public Wumpus getWumpus() {
-        return wumpus;
+    public long getWumpusID() {
+        return wumpusID;
     }
 
-    public void setWumpus(Wumpus wumpus) {
-        this.wumpus = wumpus;
+    public void setWumpusID(long wumpusID) {
+        this.wumpusID = wumpusID;
     }
 
-    public Parrot getParrot() {
-        return parrot;
+    public long getParrotID() {
+        return parrotID;
     }
 
-    public void setParrot(Parrot parrot) {
-        this.parrot = parrot;
+    public void setParrotID(long parrotID) {
+        this.parrotID = parrotID;
+    }
+
+    public long getTreasureID() {
+        return treasureID;
+    }
+
+    public void setTreasureID(long treasureID) {
+        this.treasureID = treasureID;
     }
 }

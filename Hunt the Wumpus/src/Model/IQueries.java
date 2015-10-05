@@ -15,4 +15,7 @@ public interface IQueries {
     public Player getPlayer();
     public Wumpus getWumpus();
     public Parrot getParrot();
+    public Treasure getTreasure();
+    public void hideTreasure(long id);
+    public void addItemToPlayerInventory(Long id, Item item);
 }

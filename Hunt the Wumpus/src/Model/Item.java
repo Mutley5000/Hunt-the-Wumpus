@@ -11,7 +11,7 @@ package Model;
  */
 public abstract class Item {
     long id;
-    Room location;
+    String location;
 
     public long getId() {
         return id;
@@ -21,12 +21,11 @@ public abstract class Item {
         this.id = id;
     }
 
-    public Room getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Room location) {
+    public void setLocation(String location) {
         this.location = location;
     }
-    
 }

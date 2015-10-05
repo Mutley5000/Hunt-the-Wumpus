@@ -18,6 +18,7 @@ public class Model extends Observable {
     Player currentPlayer;
     Wumpus currentWumpus;
     Parrot currentParrot;
+    Treasure treasure;
     Session currentSession;
     
     Layout layout = new Layout();
@@ -31,15 +32,24 @@ public class Model extends Observable {
     public Model( IQueries iq ) {
         super();
         queries = iq;
-        System.out.println(world.location.label);
+        //System.out.println(world.location.label);
         
     }
     
     public void createSession() {
+        // Hard coded ATM
         currentPlayer = queries.getPlayer();
         currentWumpus = queries.getWumpus();
         currentParrot = queries.getParrot();
-        currentSession = new Session(currentPlayer, currentWumpus, currentParrot);
+        treasure = queries.getTreasure();
+        
+        // TODO -   
+        //          Randomise parrot, treasure and wumpus location at start of game.
+        //          Player profile creation.
+        //          Save session to DB.
+        //          Load session from DB.
+        
+        currentSession = new Session(currentPlayer.id, currentWumpus.id, currentParrot.id, treasure.id);
     }
     
     
@@ -61,45 +71,55 @@ public class Model extends Observable {
     }
     
     public void move(int i) {
+        world.setLocation(currentPlayer.location);
         ArrayList<Room> rooms = world.getRooms();
         world.enter(rooms.get(i));
         System.out.println(world.location.label);
         currentPlayer.location = world.location.label;
         queries.updatePlayerLocation(currentPlayer.id, currentPlayer.location);
-        System.out.println("Player location: "+currentSession.player.location);
+        System.out.println("Player location: "+currentPlayer.location);
         // Testing
         /*for (Room r : rooms)
             System.out.println(r.label);
         System.out.println("space");*/
         rooms.clear();
-        checkForEntities();
+        checkRoomContents();
     }
     
-    public void checkForEntities(){
+    public void checkRoomContents(){
         checkForWumpus();
         checkForParrot();
+        checkForTreasure();
     }
     
     public void checkForWumpus() {
         
         int distance = world.distance(world.getRoom(currentPlayer.location), world.getRoom(currentWumpus.location));
         if (distance == 0) {
-            
-        }
-        
-        else {
-            
+            // Show the Wumpus then end screen.
         }
     }
     
     public void checkForParrot() {
         int distance = world.distance(world.getRoom(currentPlayer.location), world.getRoom(currentParrot.location));
         if (distance == 0) {
+            // Show the parrot
             
+            // If clicked show distance to Wumpus
+            
+            // After showing distance randomise its location and update table
         }
-        
-        else {
+    }
+    
+    public void checkForTreasure() {
+        int distance = world.distance(world.getRoom(currentPlayer.location), world.getRoom(treasure.location));
+        if (distance == 0) {
+            // Collect treasure
+            // Add to player inventory
+            queries.addItemToPlayerInventory(currentPlayer.inventoryID, treasure);
             
+            // Hide from map - set location to 0
+            queries.hideTreasure(treasure.id);
         }
     }
 }

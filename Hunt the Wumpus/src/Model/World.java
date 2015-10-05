@@ -18,6 +18,11 @@ public class World extends Graph {
     public Room getRoom( String r) {
         return (Room) getNode( r );
     }
+    
+    public Room setLocation(String l) {
+        location = getRoom(l);
+        return location;
+    }
 
     public boolean enter(Room r) { 
 	ArrayList <Edge> ale = location.edges;

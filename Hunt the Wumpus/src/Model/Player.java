@@ -11,6 +11,7 @@ package Model;
  */
 public class Player extends Entity {
     String name;
+    long inventoryID;
 
     public String getName() {
         return name;
@@ -20,9 +21,10 @@ public class Player extends Entity {
         this.name = name;
     }
     
-    public Player(int id, String name, String location) {
+    public Player(int id, String name, String location, long inventoryID) {
         this.id = id;
         this.name = name;
         this.location = location;
+        this.inventoryID = inventoryID;
     }
 }

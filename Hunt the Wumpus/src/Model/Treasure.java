@@ -20,4 +20,10 @@ public class Treasure extends Item {
         this.amount = amount;
     }
     
+    public Treasure(int id, String location, int amount) {
+        this.id = id;
+        this.location = location;
+        this.amount = amount;
+    }
+    
 }

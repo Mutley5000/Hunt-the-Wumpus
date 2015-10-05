@@ -32,14 +32,10 @@ public class Queries implements IQueries {
     String getPlayer = "SELECT * FROM PLAYER WHERE ID = ?";
     String getWumpus = "SELECT * FROM WUMPUS WHERE ID = ?";
     String getParrot = "SELECT * FROM PARROT WHERE ID = ?";
+    String getTreasure = "SELECT * FROM TREASURE WHERE ID = ?";
+    String addItemToPlayerInventory = "INSERT INTO INVENTORY VALUES(?,?,?)";
+    String hideTreasure = "UPDATE TREASURE SET LOCATION = ? WHERE ID = ?";
     
-    String insertNewBookingSQL = "INSERT INTO BOOKINGS(LASTNAME, PHONE, DINERS, DAYOFWEEK, TABLEID) VALUES(?,?,?,?,?)";
-    String selectAllBookingsSQL =  "SELECT ID, LASTNAME, PHONE, DINERS, DAYOFWEEK, TABLEID " +
-                                "FROM BOOKINGS";
-    String selectBookingDaySQL =   "SELECT ID, LASTNAME, PHONE, DINERS, DAYOFWEEK, TABLEID FROM BOOKINGS WHERE DAYOFWEEK = ?";
-    String selectTotalDinersForDaySQL = "SELECT SUM(DINERS) FROM BOOKINGS WHERE DAYOFWEEK = ?";
-    String selectUnoccupiedTablesSQL = "SELECT ID, SEATS FROM TABLES WHERE ID NOT IN (SELECT TABLEID FROM BOOKINGS WHERE DAYOFWEEK = ?)";
-    String selectRestaurantCapacitySQL = "SELECT SUM(SEATS) FROM TABLES WHERE ID NOT IN (SELECT TABLEID FROM BOOKINGS WHERE DAYOFWEEK = ?)"; 
     
     // Create prepared statement
     PreparedStatement ps;
@@ -94,20 +90,6 @@ public class Queries implements IQueries {
     }
 
     @Override
-    public void updatePlayerLocation(Long id, String room) {
-        try {
-            ps = connection.prepareStatement(updatePlayerLocation);
-            ps.setString(1, room);
-            ps.setLong(2, id);
-            ps.executeUpdate();
-        }
-        
-        catch ( SQLException err ) {
-            System.out.println( err.getMessage( ) );
-        }
-    }
-    
-    @Override
     public Player getPlayer() {
         ResultSet rs = null;
         Player player = null;
@@ -121,8 +103,9 @@ public class Queries implements IQueries {
                 int id = rs.getInt("ID");
                 String name = rs.getString("PLAYERNAME");
                 String location = rs.getString("LOCATION");
+                int inventoryID = rs.getInt("INVENTORYID");
                 
-                player = new Player(id, name, location);
+                player = new Player(id, name, location, inventoryID);
             }
         }
         
@@ -130,6 +113,20 @@ public class Queries implements IQueries {
             System.out.println( err.getMessage( ) );
         }
         return player;
+    }
+    
+    @Override
+    public void updatePlayerLocation(Long id, String room) {
+        try {
+            ps = connection.prepareStatement(updatePlayerLocation);
+            ps.setString(1, room);
+            ps.setLong(2, id);
+            ps.executeUpdate();
+        }
+        
+        catch ( SQLException err ) {
+            System.out.println( err.getMessage( ) );
+        }
     }
 
     @Override
@@ -145,7 +142,7 @@ public class Queries implements IQueries {
             while (rs.next()) {
                 int id = rs.getInt("ID");
                 String location = rs.getString("LOCATION");
-                String state = rs.getString("STATE");
+                String state = rs.getString("WUMPUSSTATE");
                 String sendOff = rs.getString("SENDOFF");
                 
                 wumpus = new Wumpus(id, location, state, sendOff);
@@ -181,5 +178,61 @@ public class Queries implements IQueries {
             System.out.println( err.getMessage( ) );
         }
         return parrot;
+    }
+
+    @Override
+    public Treasure getTreasure() {
+        ResultSet rs = null;
+        Treasure treasure = null;
+        
+        try {
+            ps = connection.prepareStatement(getTreasure);
+            ps.setLong(1, 1);
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                int id = rs.getInt("ID");
+                String location = rs.getString("LOCATION");
+                int amount = rs.getInt("AMOUNT");
+                
+                treasure = new Treasure(id, location, amount);
+            }
+        }
+        
+        catch ( SQLException err ) {
+            System.out.println( err.getMessage( ) );
+        }
+        return treasure;
+    }
+    
+    public void hideTreasure(long id) {
+        try {
+            ps = connection.prepareStatement(hideTreasure);
+            ps.setString(1, "0");
+            ps.setLong(2, id);
+            ps.executeUpdate();
+        }
+        
+        catch ( SQLException err ) {
+            System.out.println( err.getMessage( ) );
+        }
+    }
+    
+    @Override
+    public void addItemToPlayerInventory(Long id, Item item) {
+        int quantity = 1;
+        long itemId = item.id;
+        
+        try {
+            ps = connection.prepareStatement(addItemToPlayerInventory);
+            ps.setLong(1, id);
+            ps.setInt(2, quantity);
+            ps.setLong(3, itemId);
+            ps.executeUpdate();
+        }
+        
+        catch ( SQLException err ) {
+            System.out.println( err.getMessage( ) );
+        }
     }
 }
