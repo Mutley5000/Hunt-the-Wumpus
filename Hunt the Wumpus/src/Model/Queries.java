@@ -6,6 +6,7 @@
 package Model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,6 +36,7 @@ public class Queries implements IQueries {
     String getTreasure = "SELECT * FROM TREASURE WHERE ID = ?";
     String addItemToPlayerInventory = "INSERT INTO INVENTORY VALUES(?,?,?)";
     String hideTreasure = "UPDATE TREASURE SET LOCATION = ? WHERE ID = ?";
+    String saveSession = "INSERT INTO SESSION(CREATEDDATE, PLAYERID, WUMPUSID, PARROTID, TREASUREID) VALUES(?,?,?,?,?)";
     
     
     // Create prepared statement
@@ -205,6 +207,7 @@ public class Queries implements IQueries {
         return treasure;
     }
     
+    @Override
     public void hideTreasure(long id) {
         try {
             ps = connection.prepareStatement(hideTreasure);
@@ -228,6 +231,23 @@ public class Queries implements IQueries {
             ps.setLong(1, id);
             ps.setInt(2, quantity);
             ps.setLong(3, itemId);
+            ps.executeUpdate();
+        }
+        
+        catch ( SQLException err ) {
+            System.out.println( err.getMessage( ) );
+        }
+    }
+    
+    @Override
+    public void saveSession(Session session) {
+        try {
+            ps = connection.prepareStatement(saveSession);
+            ps.setDate(1, (Date) session.createdDate);
+            ps.setLong(2, session.playerID);
+            ps.setLong(3, session.wumpusID);
+            ps.setLong(4, session.parrotID);
+            ps.setLong(5, session.treasureID);
             ps.executeUpdate();
         }
         

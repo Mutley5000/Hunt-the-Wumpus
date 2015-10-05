@@ -37,7 +37,7 @@ public class Controller {
     
     //TODO
     public void saveButtonAction() {
-        
+        model.saveSession();
     }
     
     

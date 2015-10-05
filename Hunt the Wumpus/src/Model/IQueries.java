@@ -18,4 +18,5 @@ public interface IQueries {
     public Treasure getTreasure();
     public void hideTreasure(long id);
     public void addItemToPlayerInventory(Long id, Item item);
+    public void saveSession(Session session);
 }

@@ -25,5 +25,4 @@ public class Treasure extends Item {
         this.location = location;
         this.amount = amount;
     }
-    
 }

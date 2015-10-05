@@ -5,7 +5,7 @@
  */
 package Model;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class Session {
     
-    Date createdDate = new Date();
+    Date createdDate;
     long playerID;
     long wumpusID;
     long parrotID;
@@ -28,6 +28,11 @@ public class Session {
 
     public Date getCreatedDate() {
         return createdDate;
+    }
+
+    public void setCreatedDate() {
+        java.util.Date utilDate = new java.util.Date();
+        this.createdDate = new java.sql.Date(utilDate.getTime());
     }
 
     public long getPlayerID() {

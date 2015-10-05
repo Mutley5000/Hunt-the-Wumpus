@@ -75,7 +75,7 @@ public class Graph {
 	}
 
 	//The path to n2 is stored in the step fields. 
-	Stack <Edge> path = new Stack <Edge> ();
+	Stack <Edge> path = new Stack <> ();
 	Node t = n2;
 	while ( t.step != null ) {
             path.push( t.step );
