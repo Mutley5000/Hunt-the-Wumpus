@@ -49,6 +49,7 @@ public class Controller {
     
     public void quitButtonAction() {
         gui.returnToStartScreen();
+        model.resetGame();
     }
     
     
@@ -62,16 +63,22 @@ public class Controller {
     }
 
     public void leftButtonAction() {
+        gui.hideParrot();
+        gui.hideTreasure();
         model.goLeft();
         gui.setTextArea(model.sendMessage());
     }
 
     public void backButtonAction() {
+        gui.hideParrot();
+        gui.hideTreasure();
         model.goBack();
         gui.setTextArea(model.sendMessage());
     }
 
     public void rightButtonAction() {
+        gui.hideParrot();
+        gui.hideTreasure();
         model.goRight();
         gui.setTextArea(model.sendMessage());
     }

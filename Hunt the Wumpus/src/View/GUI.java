@@ -28,6 +28,8 @@ public class GUI extends JFrame implements IGUI {
     private javax.swing.JLabel Background;
     private javax.swing.JLabel Bird;
     private javax.swing.JLayeredPane BirdPanel;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLayeredPane WumpusPanel;
     private javax.swing.JLabel DeadBackGround;
     private javax.swing.JLayeredPane DeadPanel;
     private javax.swing.JComboBox EquipCombo;
@@ -134,6 +136,8 @@ public class GUI extends JFrame implements IGUI {
         Bird = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        WumpusPanel = new javax.swing.JLayeredPane();
+        jLabel7 = new javax.swing.JLabel();
         SleepMonstorPanel = new javax.swing.JLayeredPane();
         SleepMonstor = new javax.swing.JLabel();
         TreasurePanel = new javax.swing.JLayeredPane();
@@ -369,7 +373,24 @@ public class GUI extends JFrame implements IGUI {
 
         RoomPanel.add(BirdPanel);
         BirdPanel.setBounds(120, 0, 510, 230);
+        
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Entities/Wumpus.png"))); // NOI18N
+        WumpusPanel.add(jLabel7);
+        jLabel7.setBounds(76, 119, 199, 178);
 
+        jTextArea2.setEditable(false);
+        jTextArea2.setColumns(3);
+        jTextArea2.setRows(2);
+        jTextArea2.setAutoscrolls(false);
+        jScrollPane3.setViewportView(jTextArea2);
+
+        WumpusPanel.add(jScrollPane3);
+        jScrollPane3.setBounds(12, 19, 326, 42);
+
+        RoomPanel.add(WumpusPanel);
+        WumpusPanel.setBounds(340, 230, 350, 300);
+        WumpusPanel.setVisible(false);
+        
         SleepMonstor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Entities/Sleeping Monster.png"))); // NOI18N
         SleepMonstor.setText("jLabel2");
 
@@ -683,5 +704,32 @@ object.var = 1;     // non static variable
     @Override
     public void setTextArea(String info) {
         notiforcation.setText(info);
+    }
+
+    @Override
+    public void showParrot(String message) {
+        BirdPanel.setVisible(true);
+        jTextArea1.setText(message);
+    }
+    
+    @Override
+    public void hideParrot() {
+        BirdPanel.setVisible(false);
+    }
+
+    @Override
+    public void showWumpus(String message) {
+        WumpusPanel.setVisible(true);
+        jTextArea1.setText(message);
+    }
+
+    @Override
+    public void showTreasure() {
+        TreasurePanel.setVisible(true);
+    }
+
+    @Override
+    public void hideTreasure() {
+        TreasurePanel.setVisible(false);
     }
 }

@@ -38,6 +38,10 @@ public class Queries implements IQueries {
     String hideTreasure = "UPDATE TREASURE SET LOCATION = ? WHERE ID = ?";
     String saveSession = "INSERT INTO SESSION(CREATEDDATE, PLAYERID, WUMPUSID, PARROTID, TREASUREID) VALUES(?,?,?,?,?)";
     
+    String resetPlayer = "UPDATE PLAYER SET LOCATION = ? WHERE ID = ?";
+    String resetTreasure = "UPDATE TREASURE SET LOCATION = ? WHERE ID = ?";
+    String resetInventory = "DELETE FROM INVENTORY";
+    
     
     // Create prepared statement
     PreparedStatement ps;
@@ -91,6 +95,7 @@ public class Queries implements IQueries {
         }
     }
 
+    // Query methods
     @Override
     public Player getPlayer() {
         ResultSet rs = null;
@@ -248,6 +253,48 @@ public class Queries implements IQueries {
             ps.setLong(3, session.wumpusID);
             ps.setLong(4, session.parrotID);
             ps.setLong(5, session.treasureID);
+            ps.executeUpdate();
+        }
+        
+        catch ( SQLException err ) {
+            System.out.println( err.getMessage( ) );
+        }
+    }
+    
+    // Reset methods
+    
+    @Override
+    public void resetPlayer(long id) {
+        try {
+            ps = connection.prepareStatement(resetPlayer);
+            ps.setString(1, "1");
+            ps.setLong(2, id);
+            ps.executeUpdate();
+        }
+        
+        catch ( SQLException err ) {
+            System.out.println( err.getMessage( ) );
+        }
+    }
+    
+    @Override
+    public void resetTreasure(long id) {
+        try {
+            ps = connection.prepareStatement(resetTreasure);
+            ps.setString(1, "4");
+            ps.setLong(2, id);
+            ps.executeUpdate();
+        }
+        
+        catch ( SQLException err ) {
+            System.out.println( err.getMessage( ) );
+        }
+    }
+    
+    @Override
+    public void resetInventory() {
+        try {
+            ps = connection.prepareStatement(resetInventory);
             ps.executeUpdate();
         }
         

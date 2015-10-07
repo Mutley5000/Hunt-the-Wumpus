@@ -104,6 +104,8 @@ public class Model extends Observable {
         int distance = world.distance(world.getRoom(currentPlayer.location), world.getRoom(currentWumpus.location));
         if (distance == 0) {
             // Show the Wumpus then end screen.
+            setChanged();
+            notifyObservers(currentWumpus);
         }
     }
 
@@ -111,7 +113,8 @@ public class Model extends Observable {
         int distance = world.distance(world.getRoom(currentPlayer.location), world.getRoom(currentParrot.location));
         if (distance == 0) {
             // Show the parrot
-
+            setChanged();
+            notifyObservers(currentParrot);
             // If clicked show distance to Wumpus
             // After showing distance randomise its location and update table
         }
@@ -124,9 +127,12 @@ public class Model extends Observable {
             // Collect treasure
                 // Add to player inventory
                 queries.addItemToPlayerInventory(currentPlayer.inventoryID, treasure);
+                setChanged();
+                notifyObservers(treasure);
 
                 // Hide from map - set location to 0
                 queries.hideTreasure(treasure.id);
+                treasure.location = "0";
             }
         }
     }
@@ -140,5 +146,11 @@ public class Model extends Observable {
     public String sendMessage() {
         String message = "You are in room " + currentPlayer.location;
         return message;
+    }
+    
+    public void resetGame() {
+        queries.resetPlayer(currentPlayer.id);
+        queries.resetTreasure(treasure.id);
+        queries.resetInventory();
     }
 }
