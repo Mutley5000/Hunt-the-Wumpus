@@ -3,9 +3,10 @@
  * For educational purposes only.
  * 
  */
-package Controller;
+package CustomController;
 
-import Model.Model;import View.IGUI;
+import Model.Model;
+import CustomView.IGUI;
 
 /**
  *
@@ -25,9 +26,10 @@ public class Controller {
     }
     
     public void startButtonAction() {
+        System.out.println("controller");
         gui.startGame();
-        model.createSession();
-        gui.setTextArea(model.sendMessage());
+        //model.createSession();
+        //gui.setTextArea(model.sendMessage());
     }
     
     public void optionsButtonAction() {
@@ -51,6 +53,9 @@ public class Controller {
         model.resetGame();
     }
     
+    public String test() {
+        return "working";
+    }
     
     //TODO
     public void mapButtonAction() {
